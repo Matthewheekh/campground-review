@@ -1,0 +1,40 @@
+<%- layout('/layouts/boilerplate') -%>
+
+<div class="mb-4">
+    <h1 class="d-inline align-middle">Campgrounds</h1>
+    <a href="/campgrounds/new">
+        <button type="button" class="btn btn-primary align-middle float-end">Add Campground</button>
+    </a>
+</div>
+
+<div class="mb-4" id='cluster-map'></div>
+
+
+<% for (let campground of campgrounds) { %>
+    <div class="card index-card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <% if (campground.images.length != 0) { %> 
+                    <img src="<%= campground.images[0].url %> " class="img-fluid rounded-start picture" alt="...">
+                <% } %> 
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title"><%= campground.title %></h5>
+                    <p class="card-text"><%= campground.description %></p>
+                    <p class="card-text"><small class="text-muted"><%= campground.location %></small></p>
+                    <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<% } %>
+
+
+<script>
+    const MAPBOX_TOKEN = '<%- process.env.MAPBOX_TOKEN%>'
+    const campgrounds = { features: <%- JSON.stringify(campgrounds) %> }
+</script>
+
+<script src="/js/indexPageMap.js"></script>
+
